@@ -4,17 +4,17 @@ public class CallbackForMessageInjest {
 
 	private String digest;
 	
-	public CallbackForMessageInjest( String data) {
-		this.digest=data;
+	public CallbackForMessageInjest( String digest) {
+		this.digest=digest;
 		
 	}
 
-	public String getData() {
+	public String getDigest() {
 		return digest;
 	}
 
-	public void setData(String data) {
-		this.digest = data;
+	public void setDigest(String digest) {
+		this.digest = digest;
 	}
 	
 }

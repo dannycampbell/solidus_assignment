@@ -4,17 +4,17 @@ public class CallbackForMessageRetrieval {
 
 	private String message;
 	
-	public CallbackForMessageRetrieval( String data) {
-		this.message=data;
+	public CallbackForMessageRetrieval( String message) {
+		this.message=message;
 		
 	}
 
-	public String getData() {
+	public String getMessage() {
 		return message;
 	}
 
-	public void setData(String data) {
-		this.message = data;
+	public void setData(String message) {
+		this.message = message;
 	}
 	
 }
