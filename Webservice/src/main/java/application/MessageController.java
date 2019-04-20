@@ -1,4 +1,4 @@
-package rest.controller;
+package application;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import application.exceptions.MessageNotFoundException;
 import rest.dto.CallbackForMessageInjest;
 import rest.dto.CallbackForMessageRetrieval;
 import util.caching.CachedHashes;
@@ -17,18 +18,17 @@ import util.caching.CachedHashes;
 @RestController
 public class MessageController {
 
-	
 	@GetMapping("/messages/{hash}")
-	public CallbackForMessageRetrieval checkForExisitingHash(@PathVariable String hash) {
-		String message=CachedHashes.getInstance().getHash(hash);
-		if(message==null) {
-			message="error";
+	public CallbackForMessageRetrieval checkForExisitingHash(@PathVariable String hash) throws MessageNotFoundException {
+		String message = CachedHashes.getInstance().getHash(hash);
+		if (message == null) {
+			throw new MessageNotFoundException();
 		}
 		return new CallbackForMessageRetrieval(message);
 	}
-	
+
 	@PostMapping("/messages")
-	public CallbackForMessageInjest greeting(@RequestParam(value = "message", defaultValue = "World") String name)
+	public CallbackForMessageInjest greeting(@RequestParam(value = "message") String name)
 			throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		byte[] messageSHA = md.digest(name.getBytes());
